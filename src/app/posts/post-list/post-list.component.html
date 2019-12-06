@@ -1,0 +1,43 @@
+<mat-accordion multi="true" *ngIf="posts.length > 0">
+  <mat-expansion-panel *ngFor="let post of posts; let i = index">
+    <mat-expansion-panel-header>
+      {{ post.title }}
+    </mat-expansion-panel-header>
+      <p>{{ post.content }}</p>
+      <mat-action-row>
+        <mat-form-field class="emotions-list">
+          <mat-chip-list #chipList aria-label="Emotion selection">
+            <mat-chip
+              *ngFor="let emotion of emotions"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="remove(emotion)">
+              {{emotion}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input
+              placeholder="New emotion..."
+              #emotionInput
+              [formControl]="emotionCtrl"
+              [matAutocomplete]="auto"
+              [matChipInputFor]="chipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="addOnBlur"
+              (matChipInputTokenEnd)="add($event)">
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let emotion of filteredEmotions | async" [value]="emotion">
+              {{emotion}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </mat-action-row>
+      <mat-action-row>
+        <button mat-button (click)="onDelete(i)" color="warn">Delete</button>
+      </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<p class="info-text" *ngIf="posts.length <= 0">No posts from you yet!</p>
+<mat-spinner></mat-spinner>
+<p class="info-text">Loading posts...</p>
+

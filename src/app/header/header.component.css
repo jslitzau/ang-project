@@ -1,0 +1,13 @@
+mat-toolbar {
+  box-shadow: 0 0 5px 2px black;
+  margin-bottom: 1em;
+}
+
+.friendToggle {
+  margin-left: 5em;
+  margin-bottom: 1em;
+}
+
+h1 {
+  margin-left: 5em;
+}
